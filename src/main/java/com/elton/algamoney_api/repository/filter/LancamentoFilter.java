@@ -1,5 +1,4 @@
 package com.elton.algamoney_api.repository.filter;
-
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
