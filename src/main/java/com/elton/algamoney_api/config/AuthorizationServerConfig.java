@@ -34,8 +34,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(passwordEncoder.encode("@ngul@r0")) // @ngul@r0
 				.scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
-				.accessTokenValiditySeconds(1800)
-				.refreshTokenValiditySeconds(3600 * 24);
+				.accessTokenValiditySeconds(10) // 1800
+				.refreshTokenValiditySeconds(3600 * 24);//3600 * 24
 	}
 
 	@Override
@@ -61,4 +61,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
 	}
+
+
 }

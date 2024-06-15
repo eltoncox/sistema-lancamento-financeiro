@@ -1,4 +1,5 @@
 package com.elton.algamoney_api.config;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +42,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
     public void configure(HttpSecurity http) throws Exception {
         
         http.authorizeRequests()
-                .antMatchers("/categorias").permitAll()
+                .antMatchers("/categorias").permitAll()                 
                 .anyRequest().authenticated()
             .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
