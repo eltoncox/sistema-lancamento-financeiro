@@ -37,6 +37,11 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private UserDetailsService userDetailsService;	
+	
+	@Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
      
     @Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -51,6 +56,28 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 	            .oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
 	}
 
+    private JwtAuthenticationConverter jwtAuthenticationConverter() {
+    	JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+    	jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
+    		List<String> authorities = jwt.getClaimAsStringList("authorities");
+    		
+    		if (authorities == null) {
+    			authorities = Collections.emptyList();
+    		}
+    		
+    		JwtGrantedAuthoritiesConverter scopesAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+    		Collection<GrantedAuthority> grantedAuthorities = scopesAuthoritiesConverter.convert(jwt);
+    		
+    		grantedAuthorities.addAll(authorities.stream()
+    				.map(SimpleGrantedAuthority::new)
+    				.collect(Collectors.toList()));
+    		
+    		return grantedAuthorities;
+    	});
+    	
+    	return jwtAuthenticationConverter;
+    }
+    
 	@Bean
 	public JwtDecoder jwtDecoder() {
 	    var secretKey = new SecretKeySpec("3032885ba9cd6621bcc4e7d6b6c35c2b".getBytes(), "HmacSHA256");
@@ -68,38 +95,4 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
-	/*
-	@Bean
-	public MethodSecurityExpressionHandler createExpressionHandler() {
-		return new OAuth2MethodSecurityExpressionHandler();
-	}*/
-	
-
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-    private JwtAuthenticationConverter jwtAuthenticationConverter() {
-		JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
-			List<String> authorities = jwt.getClaimAsStringList("authorities");
-	
-			if (authorities == null) {
-				authorities = Collections.emptyList();
-			}
-	
-			JwtGrantedAuthoritiesConverter scopesAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-			Collection<GrantedAuthority> grantedAuthorities = scopesAuthoritiesConverter.convert(jwt);
-	
-			grantedAuthorities.addAll(authorities.stream()
-					.map(SimpleGrantedAuthority::new)
-					.collect(Collectors.toList()));
-	
-			return grantedAuthorities;
-		});
-	
-		return jwtAuthenticationConverter;
-	}
-
 }
