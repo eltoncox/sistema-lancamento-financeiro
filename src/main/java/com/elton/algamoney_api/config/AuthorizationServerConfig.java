@@ -18,24 +18,31 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-    @Autowired
+	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
-	private UserDetailsService userDetailsService;	
+	private UserDetailsService userDetailsService;
     	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
 				.withClient("angular")
-				.secret(passwordEncoder.encode("@ngul@r0")) // @ngul@r0
+				.secret("$2a$10$UAc049fUm6Bxy8X/.mpn8.PfD2ncb4ZgvmEa5Hb.JOGVJNX1ampgG") //forma insegura -@ngul@r0- $2a$10$UAc049fUm6Bxy8X/.mpn8.PfD2ncb4ZgvmEa5Hb.JOGVJNX1ampgG
 				.scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
-				.accessTokenValiditySeconds(10) // 1800
-				.refreshTokenValiditySeconds(3600 * 24);//3600 * 24
+				.accessTokenValiditySeconds(1800)
+				.refreshTokenValiditySeconds(3600 * 24)
+		.and()
+				.withClient("mobile")
+				.secret("$2a$10$z6PgsFNvjUyoGPy8WoOijublTTCwOISLmrHLzb5CGD/IFescFJxd2")//forma insegura -m0b1le0- $2a$10$z6PgsFNvjUyoGPy8WoOijublTTCwOISLmrHLzb5CGD/IFescFJxd2
+				.scopes("read")
+				.authorizedGrantTypes("password", "refresh_token")
+				.accessTokenValiditySeconds(1800)
+				.refreshTokenValiditySeconds(3600 * 24);
 	}
 
 	@Override
@@ -61,6 +68,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
 	}
-
-
 }
