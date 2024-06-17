@@ -28,7 +28,7 @@ public class CorsFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;
 		
 		response.setHeader("Access-Control-Allow-Origin", originPermitida);
-        response.setHeader("Access-Control-Allow-Credentials", "true");// para o cookie ser enviado
+        response.setHeader("Access-Control-Allow-Credentials", "true");
 		
 		if ("OPTIONS".equals(request.getMethod()) && originPermitida.equals(request.getHeader("Origin"))) {
 			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
