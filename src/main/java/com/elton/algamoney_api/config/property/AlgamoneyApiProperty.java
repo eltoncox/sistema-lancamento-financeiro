@@ -1,4 +1,4 @@
-package com.elton.algamoney_api.config.properties;
+package com.elton.algamoney_api.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

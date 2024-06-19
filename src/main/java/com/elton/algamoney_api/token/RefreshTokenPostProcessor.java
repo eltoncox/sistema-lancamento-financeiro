@@ -17,7 +17,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import com.elton.algamoney_api.config.properties.AlgamoneyApiProperty;
+import com.elton.algamoney_api.config.property.AlgamoneyApiProperty;
 
 @SuppressWarnings("deprecation")
 @ControllerAdvice

@@ -1,5 +1,6 @@
 package com.elton.algamoney_api.config;
 
+
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
 				.withClient("angular")
-				.secret("$2a$10$UAc049fUm6Bxy8X/.mpn8.PfD2ncb4ZgvmEa5Hb.JOGVJNX1ampgG") // @ngul@r0
+				.secret("$2a$10$UAc049fUm6Bxy8X/.mpn8.PfD2ncb4ZgvmEa5Hb.JOGVJNX1ampgG") // @ngul@r0 = 
 				.scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
 				.accessTokenValiditySeconds(1800)
 				.refreshTokenValiditySeconds(3600 * 24)
 			.and()
 				.withClient("mobile")
-				.secret("$2a$10$z6PgsFNvjUyoGPy8WoOijublTTCwOISLmrHLzb5CGD/IFescFJxd2")//forma insegura - m0b1le0 
+				.secret("$2a$10$.Ryb5YuvDgGm45PtJ3CvvelvrbUNg/wLVXNrhHmchVU1/N9g1nqfK\n") // Forma insegura
 				.scopes("read")
 				.authorizedGrantTypes("password", "refresh_token")
 				.accessTokenValiditySeconds(1800)

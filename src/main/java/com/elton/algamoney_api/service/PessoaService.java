@@ -1,13 +1,12 @@
 package com.elton.algamoney_api.service;
 
+import com.elton.algamoney_api.model.Pessoa;
+import com.elton.algamoney_api.repository.PessoaRepository;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
-import com.elton.algamoney_api.model.Pessoa;
-import com.elton.algamoney_api.repository.PessoaRepository;
 
 @Service
 public class PessoaService {
@@ -29,7 +28,7 @@ public class PessoaService {
 		pessoaRepository.save(pessoaSalva);
 	}
 
-	private Pessoa buscarPessoaPeloCodigo(Long codigo) {
+	public Pessoa buscarPessoaPeloCodigo(Long codigo) {
 		Pessoa pessoaSalva =  pessoaRepository.findById(codigo)
 								.orElseThrow(() -> new EmptyResultDataAccessException(1));
 
